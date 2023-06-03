@@ -13,5 +13,9 @@ public interface PessoaRepository extends CrudRepository <Pessoa,Long> {
 
     @Query("select e from Pessoa e where e.email = :parEmail")
     Pessoa findOneByEmail(String parEmail);
+
+    @Query("select e from Pessoa e where e.id = :parId")
+    Pessoa findOneById(Long parId);
+
 }
 

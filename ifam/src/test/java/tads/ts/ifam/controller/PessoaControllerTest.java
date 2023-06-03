@@ -34,7 +34,6 @@ public class PessoaControllerTest {
 
         ResultMatcher conteudoEsperado = MockMvcResultMatchers.content().json(jsonRetorno);
 
-
         mvc.perform(request).andExpect(statusEsperado).andExpect(conteudoEsperado);
 
     }
@@ -43,7 +42,7 @@ public class PessoaControllerTest {
     @Test
     public void deveConsultarPessoaPorEmail() throws Exception {
 
-        URI uri = new URI("/api/pessoas/ALUNO1.EMAIL@IFAM.EDU.BR");
+        URI uri = new URI("/api/pessoas/email/ALUNO1.EMAIL@IFAM.EDU.BR");
 
         RequestBuilder request = MockMvcRequestBuilders.get(uri);
 
@@ -59,9 +58,19 @@ public class PessoaControllerTest {
 
     }
 
+    @Test
+    public void deveConsultarPessoaPorId() throws Exception {
 
-//    @Test
-//    public void deveConsultarPessoaPorId(){
-//
-//    }
+        URI uri = new URI("/api/pessoas/2");
+
+        RequestBuilder request = MockMvcRequestBuilders.get(uri);
+
+        ResultMatcher statusEsperado = MockMvcResultMatchers.status().is(200);
+
+        String jsonRetorno= "{\"id\":2,\"nome\":\"ALUNO2\",\"telefone\":\"9299999999\",\"email\":\"ALUNO2.EMAIL@IFAM.EDU.BR\",\"cidade\":{\"id\":1,\"nome\":\"MANAUS\",\"ibge\":\"1300\",\"estado\":{\"id\":1,\"nome\":\"AMAZONAS\",\"sigla\":\"AM\",\"ibge\":\"13\"}}}";
+
+        ResultMatcher conteudoEsperado = MockMvcResultMatchers.content().json(jsonRetorno);
+
+        mvc.perform(request).andExpect(statusEsperado).andExpect(conteudoEsperado);
+    }
 }

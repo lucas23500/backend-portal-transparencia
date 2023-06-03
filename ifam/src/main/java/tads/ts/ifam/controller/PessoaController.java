@@ -21,14 +21,15 @@ public class PessoaController {
     }
 
 
-    @GetMapping("/{email}")
+    @GetMapping("/email/{email}")
     public Pessoa getByEmail(@PathVariable("email") String email){
         return pessoaRepository.findOneByEmail(email);
     }
 
-
-
-
+    @GetMapping("/{id}")
+    public Pessoa getById(@PathVariable("id") Long id){
+        return pessoaRepository.findOneById(id);
+    }
 
 }
 

@@ -23,53 +23,62 @@ public class CidadeRepositoryTest {
     @BeforeEach
     void preparaCondicao(){
 
-        Cidade cidade1 = new Cidade();
-
         Estado estado1 = new Estado();
 
-        cidade1.setNome("Rio de Janeiro");
-        cidade1.setIbge("RJ");
+        estado1.setNome("Rio Grande do Sul");
+        estado1.setSigla("RS");
+        estado1.setIbge("99");
+
+        estadoRepository.save(estado1);
+
+        Cidade cidade1 = new Cidade();
+
+        cidade1.setNome("Porto Alegre");
+        cidade1.setIbge("98");
         cidade1.setEstado(estado1);
 
         cidadeRepository.save(cidade1);
     }
 
     @Test
-    @DisplayName("Deve salvar com dados corretos")
-    public void deveSalvarComDadosCorretos(){
+    @DisplayName("Deve Salvar Nova Cidade")
+    public void deveSalvarNovaCidade(){
 
-        Cidade cidade1 = new Cidade();
         Estado estado1 = new Estado();
 
-
-
-        estado1.setNome("Rondonia");
-        estado1.setSigla("RO");
-        estado1.setIbge("3113");
-
-        cidade1.setNome("PortoVelho");
-        cidade1.setIbge("1331");
-        cidade1.setEstado(estado1);
-
+        estado1.setNome("Para");
+        estado1.setSigla("PA");
+        estado1.setIbge("80");
 
         estadoRepository.save(estado1);
+
+        Cidade cidade1 = new Cidade();
+
+        cidade1.setNome("Belém");
+        cidade1.setIbge("81");
+        cidade1.setEstado(estado1);
 
         cidadeRepository.save(cidade1);
 
         Cidade cidadeNoDB = cidadeRepository.findOneByIbge(cidade1.getIbge());
 
         Assertions.assertEquals(cidade1.getIbge(), cidadeNoDB.getIbge());
-
+        Assertions.assertEquals(cidade1.getEstado(), cidadeNoDB.getEstado());
+        Assertions.assertEquals(cidade1.getNome(), cidadeNoDB.getNome());
+        Assertions.assertEquals(cidade1.getEstado().getNome(), cidadeNoDB.getEstado().getNome());
+        Assertions.assertEquals(cidade1.getEstado().getIbge(), cidadeNoDB.getEstado().getIbge());
+        Assertions.assertEquals(cidade1.getEstado().getSigla(), cidadeNoDB.getEstado().getSigla());
     }
     @Test
-    @DisplayName("Nao Deve salvar com dados corretos")
-    public void naoDeveSalvarComDadosCorretos(){
+    @DisplayName("Nao Deve Salvar Cidade Existente")
+    public void naoDeveSalvarCidadeExistente(){
 
         Cidade cidade1 = new Cidade();
-        Estado estado1 = new Estado();
 
-        cidade1.setNome("PortoVelho");
-        cidade1.setIbge("1331");
+        Estado estado1 = estadoRepository.findOneByIbge("99");
+
+        cidade1.setNome("Porto Alegre");
+        cidade1.setIbge("98");
         cidade1.setEstado(estado1);
 
         Assertions.assertThrows(DataIntegrityViolationException.class, () -> {cidadeRepository.save(cidade1);});

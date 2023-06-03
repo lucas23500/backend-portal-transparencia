@@ -55,7 +55,7 @@ public class Cidade {
 
     @Override
     public String toString() {
-        return "Estado{" +
+        return "Cidade{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", ibge='" + ibge + '\'' +
