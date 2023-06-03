@@ -53,13 +53,5 @@ public class Cidade {
         this.ibge = ibge;
     }
 
-    @Override
-    public String toString() {
-        return "Cidade{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", ibge='" + ibge + '\'' +
-                '}';
-    }
 }
 

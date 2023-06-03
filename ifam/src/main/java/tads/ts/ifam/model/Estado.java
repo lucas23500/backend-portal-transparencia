@@ -53,14 +53,6 @@ public class Estado {
         this.ibge = ibge;
     }
 
-    @Override
-    public String toString() {
-        return "Estado{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", sigla='" + sigla + '\'' +
-                ", ibge='" + ibge + '\'' +
-                '}';
-    }
+
 }
 
