@@ -1,0 +1,10 @@
+tads\ts\ifam\IfamApplication.class
+tads\ts\ifam\repository\PetRepository.class
+tads\ts\ifam\controller\RacaController.class
+tads\ts\ifam\model\Especie.class
+tads\ts\ifam\model\Raca.class
+tads\ts\ifam\repository\RacaRepository.class
+tads\ts\ifam\repository\EspecieRepository.class
+tads\ts\ifam\controller\PetController.class
+tads\ts\ifam\controller\EspecieController.class
+tads\ts\ifam\model\Pet.class
