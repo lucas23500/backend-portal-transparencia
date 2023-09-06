@@ -13,8 +13,21 @@ import java.util.List;
 @Entity
 public class Pessoa {
 
-
-
+    public Pessoa(String nome, String lotacao, String cargo, String funcao, String vinculo, Double remuneracaoTotal, String descontoTeto, Double remunercaoDevida, String descontosLegais, Double liquidosDisponiveis, String orgaoDoGoverno, String mesPagamento, Integer anoPagamento) {
+        this.nome = nome;
+        this.lotacao = lotacao;
+        this.cargo = cargo;
+        this.funcao = funcao;
+        this.vinculo = vinculo;
+        this.remuneracaoTotal = remuneracaoTotal;
+        this.descontoTeto = descontoTeto;
+        this.remunercaoDevida = remunercaoDevida;
+        this.descontosLegais = descontosLegais;
+        this.liquidosDisponiveis = liquidosDisponiveis;
+        this.orgaoDoGoverno = orgaoDoGoverno;
+        this.mesPagamento = mesPagamento;
+        this.anoPagamento = anoPagamento;
+    }
 
     public Pessoa() {
     }
@@ -29,26 +42,23 @@ public class Pessoa {
     private String cargo;
     private String funcao;
     private String vinculo;
-    private String remuneracaoTotal;
+    private Double remuneracaoTotal;
     private String descontoTeto;
-    private String remunercaoDevida;
+    private Double remunercaoDevida;
     private String descontosLegais;
-    private String liquidosDisponiveis;
+    private Double liquidosDisponiveis;
 
-//    public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
-//        List<Pessoa> findByRemuneracaoTotalGreaterThan(String remuneracaoTotal);
-//    }
-    public Pessoa(String nome, String lotacao, String cargo, String funcao, String vinculo, String remuneracaoTotal, String descontoTeto, String remunercaoDevida, String descontosLegais, String liquidosDisponiveis) {
-        this.nome = nome;
-        this.lotacao = lotacao;
-        this.cargo = cargo;
-        this.funcao = funcao;
-        this.vinculo = vinculo;
-        this.remuneracaoTotal = remuneracaoTotal;
-        this.descontoTeto = descontoTeto;
-        this.remunercaoDevida = remunercaoDevida;
-        this.descontosLegais = descontosLegais;
-        this.liquidosDisponiveis = liquidosDisponiveis;
+    private String orgaoDoGoverno;
+
+    private String mesPagamento;
+    private Integer anoPagamento;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -91,11 +101,11 @@ public class Pessoa {
         this.vinculo = vinculo;
     }
 
-    public String getRemuneracaoTotal() {
+    public Double getRemuneracaoTotal() {
         return remuneracaoTotal;
     }
 
-    public void setRemuneracaoTotal(String remuneracaoTotal) {
+    public void setRemuneracaoTotal(Double remuneracaoTotal) {
         this.remuneracaoTotal = remuneracaoTotal;
     }
 
@@ -107,11 +117,11 @@ public class Pessoa {
         this.descontoTeto = descontoTeto;
     }
 
-    public String getRemunercaoDevida() {
+    public Double getRemunercaoDevida() {
         return remunercaoDevida;
     }
 
-    public void setRemunercaoDevida(String remunercaoDevida) {
+    public void setRemunercaoDevida(Double remunercaoDevida) {
         this.remunercaoDevida = remunercaoDevida;
     }
 
@@ -123,29 +133,36 @@ public class Pessoa {
         this.descontosLegais = descontosLegais;
     }
 
-    public String getLiquidosDisponiveis() {
+    public Double getLiquidosDisponiveis() {
         return liquidosDisponiveis;
     }
 
-    public void setLiquidosDisponiveis(String liquidosDisponiveis) {
+    public void setLiquidosDisponiveis(Double liquidosDisponiveis) {
         this.liquidosDisponiveis = liquidosDisponiveis;
     }
 
-    @Override
-    public String toString() {
-        return "CsvPessoa{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", lotacao='" + lotacao + '\'' +
-                ", cargo='" + cargo + '\'' +
-                ", funcao='" + funcao + '\'' +
-                ", vinculo='" + vinculo + '\'' +
-                ", remuneracaoTotal='" + remuneracaoTotal + '\'' +
-                ", descontoTeto='" + descontoTeto + '\'' +
-                ", remunercaoDevida='" + remunercaoDevida + '\'' +
-                ", descontosLegais='" + descontosLegais + '\'' +
-                ", liquidosDisponiveis='" + liquidosDisponiveis + '\'' +
-                '}';
+    public String getOrgaoDoGoverno() {
+        return orgaoDoGoverno;
+    }
+
+    public void setOrgaoDoGoverno(String orgaoDoGoverno) {
+        this.orgaoDoGoverno = orgaoDoGoverno;
+    }
+
+    public String getMesPagamento() {
+        return mesPagamento;
+    }
+
+    public void setMesPagamento(String mesPagamento) {
+        this.mesPagamento = mesPagamento;
+    }
+
+    public Integer getAnoPagamento() {
+        return anoPagamento;
+    }
+
+    public void setAnoPagamento(Integer anoPagamento) {
+        this.anoPagamento = anoPagamento;
     }
 }
 

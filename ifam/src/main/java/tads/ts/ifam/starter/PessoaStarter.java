@@ -27,11 +27,17 @@ public class PessoaStarter {
 
         LeitorCsv leitorCsv = new LeitorCsv();
 
-        List<Pessoa> pessoaList = leitorCsv.lerCsv("C:/dev/projetos/tcc-projeto/atividadeGPS/ifam/src/main/resources/dados.csv");
+        List<String> lista = new LeitorCsv().listarNomesArquivosCSV();
 
-        PessoaController pessoaController = new PessoaController();
-
-        pessoaRepository.saveAll(pessoaList);
+        for(String pessoa : lista){
+            List<Pessoa> pessoaList = leitorCsv.lerCsv(pessoa);
+            pessoaRepository.saveAll(pessoaList);
+        }
+//        List<Pessoa> pessoaList = leitorCsv.lerCsv("C:/dev/projetos/tcc-projeto/atividadeGPS/ifam/src/main/resources/dados.csv");
+//
+//        PessoaController pessoaController = new PessoaController();
+//
+//        pessoaRepository.saveAll(pessoaList);
 
     }
 

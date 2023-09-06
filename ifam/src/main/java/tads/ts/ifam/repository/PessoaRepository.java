@@ -16,8 +16,9 @@ public interface PessoaRepository extends CrudRepository <Pessoa,Long> {
     Pessoa findOneByNome(String nome);
 
     List<Pessoa> findByNomeContaining(String nome);
+    List<Pessoa> findByOrgaoDoGovernoContaining(String OrgaoDoGoverno);
 
-//    @Query("SELECT p FROM Pessoa p WHERE p.remuneracaoTotal >= :remuneracao")
-//    List<Pessoa> findByRemuneracaoTotalGreaterThanOrEqual(double remuneracao);
+    @Query("SELECT p FROM Pessoa p WHERE p.remuneracaoTotal > :salario")
+    List<Pessoa> findByRemuneracaoTotalGreaterThan(Double salario);
 }
 

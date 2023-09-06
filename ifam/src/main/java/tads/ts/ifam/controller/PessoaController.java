@@ -23,23 +23,19 @@ public class PessoaController {
         return pessoaRepository.list();
     }
 
-    @GetMapping("/search")
+    @GetMapping(value = "/search", params = "nome")
     public List<Pessoa> search(@RequestParam("nome") String nome) {
         return pessoaRepository.findByNomeContaining(nome);
     }
 
-//    @GetMapping("/search")
-//    public List<Pessoa> searchSalario(@RequestParam("remuneracaoTotal") String remuneracaoTotal) {
-//
-//        return pessoaRepository.findByRemuneracaoTotalContaining(remuneracaoTotal);
-//    }
+    @GetMapping(value = "/search", params = "maiorSalario")
+    public List<Pessoa> searchBySalary(@RequestParam("maiorSalario") Double salario) {
+        return pessoaRepository.findByRemuneracaoTotalGreaterThan(salario);
+    }
 
-
-
-
-
-
-
-
+    @GetMapping(value = "/search", params = "orgao")
+    public List<Pessoa> searchByOrgao(@RequestParam("orgao") String orgao) {
+        return pessoaRepository.findByOrgaoDoGovernoContaining(orgao);
+    }
 
 }
