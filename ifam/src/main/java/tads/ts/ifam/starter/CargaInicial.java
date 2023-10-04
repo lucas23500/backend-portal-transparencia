@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import tads.ts.ifam.LeitorCsv.LeitorCsv;
-import tads.ts.ifam.controller.PessoaController;
 import tads.ts.ifam.model.Pessoa;
 import tads.ts.ifam.repository.PessoaRepository;
 
@@ -13,13 +12,13 @@ import java.util.List;
 
 @Slf4j
 @Component
-public class PessoaStarter {
+public class CargaInicial {
 
     private final PessoaRepository pessoaRepository;
 
 
     @Autowired
-    public PessoaStarter(PessoaRepository pessoaRepository){
+    public CargaInicial(PessoaRepository pessoaRepository){
         this.pessoaRepository = pessoaRepository;
     }
 

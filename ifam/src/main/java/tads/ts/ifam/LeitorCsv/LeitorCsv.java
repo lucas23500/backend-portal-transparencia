@@ -51,22 +51,16 @@ public class LeitorCsv {
                     if (col.length >= 10) {
                         return new CsvPessoa(col[0], col[1], col[2], col[3], col[4], col[5], col[6], col[7], col[8], col[9]);
                     } else {
-                        // Lide com o caso em que a linha não tem todas as colunas esperadas
-                        // Você pode registrar um erro ou fazer o tratamento adequado aqui
                         log.error("Erro ao ler linha: " + String.join(";", col));
                         return null;
                     }
                 })
-                .filter(Objects::nonNull) // Remova linhas com erro
+                .filter(Objects::nonNull)
                 .forEach(pessoas::add);
 
 
-
-
-//                .map(col -> new CsvPessoa(col[0], col[1], col[2], col[3], col[4], col[5], col[6], col[7], col[8], col[9]))
-//                .forEach(pessoas::add);
-
         List<Pessoa> novaPessoas = new ArrayList<>();
+
         try {
             novaPessoas = converteCsvPessoa(
                     pessoas,
@@ -106,21 +100,19 @@ public class LeitorCsv {
 
             } catch (NumberFormatException e) {
                 log.info("Exception problema no arquivo: " + pessoa.getRemuneracaoTotal());
-                var remuneracaTotal = Double.parseDouble(removeVirgulasEsquerda(pessoa.getRemuneracaoTotal().replaceAll("\\.", ",")).replaceAll(",", "."));
 
             }
 
 
-            try { //TENTANDO
+            try {
                 rmnT = Double.parseDouble(rmnTotal);
                 rmnD = Double.parseDouble(rmnDevida);
                 LD = Double.parseDouble(liquidosDis);
 
             } catch (NumberFormatException e) {
-                log.info("Exception problema na remuneracaoTotal: " + rmnTotal);
-                log.info("Exception problema na remuneracaoDevida: " + rmnDevida);
-                log.info("Exception problema na liquidosDis: " + liquidosDis);
-
+                    log.info("Exception problema na remuneracaoTotal: " + rmnTotal);
+                    log.info("Exception problema na remuneracaoDevida: " + rmnDevida);
+                    log.info("Exception problema na liquidosDis: " + liquidosDis);
             }
 
             Pessoa novaPessoa = new Pessoa(
@@ -148,6 +140,9 @@ public class LeitorCsv {
     public static String removeVirgulasEsquerda(String input) {
 
 
+        if(input.equals("") || input.equals(null)){
+            return "0.0";
+        }
 
         input = input.replaceAll(",", "");
         input = input.replaceAll("\\.", "");
