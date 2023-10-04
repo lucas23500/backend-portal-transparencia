@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/atividadeGPS.iml" filepath="$PROJECT_DIR$/.idea/atividadeGPS.iml" />
       <module fileurl="file://$PROJECT_DIR$/ifam/ifam.iml" filepath="$PROJECT_DIR$/ifam/ifam.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/projetoTCCBackend.iml" filepath="$PROJECT_DIR$/.idea/projetoTCCBackend.iml" />
     </modules>
   </component>
 </project>
