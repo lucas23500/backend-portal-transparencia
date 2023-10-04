@@ -17,25 +17,27 @@ public class CargaInicial {
     private final PessoaRepository pessoaRepository;
 
 
+    private final LeitorCsv leitorCsv;
+
     @Autowired
-    public CargaInicial(PessoaRepository pessoaRepository){
+    public CargaInicial(PessoaRepository pessoaRepository) {
         this.pessoaRepository = pessoaRepository;
+        this.leitorCsv = new LeitorCsv();
     }
 
-
-
     public void salvaRepo() throws IOException {
+        List<String> lista = leitorCsv.listarNomesArquivosCSV();
 
-        LeitorCsv leitorCsv = new LeitorCsv();
+        lista.parallelStream().forEach(arquivoCSV -> {
+            try {
+                List<Pessoa> pessoaList = leitorCsv.lerCsv(arquivoCSV);
+                pessoaRepository.saveAll(pessoaList);
+                log.info("Arquivo CSV [ " + arquivoCSV + " ] Salvo com Sucesso na Base");
+            } catch (IOException e) {
+                log.error("Erro ao processar o arquivo CSV [ " + arquivoCSV + " ]: " + e.getMessage(), e);
+            }
+        });
 
-        List<String> lista = new LeitorCsv().listarNomesArquivosCSV();
-
-
-        for(String arquivoCSV : lista){
-            List<Pessoa> pessoaList = leitorCsv.lerCsv(arquivoCSV);
-            pessoaRepository.saveAll(pessoaList);
-            log.info("Arquivo CSV [ " + arquivoCSV + " ] Salvo com Sucesso na Base");
-        }
         log.info("-=-=-= Carga inicial Finalizada -=-=-=");
     }
 }
