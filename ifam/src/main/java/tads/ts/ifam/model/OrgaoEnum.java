@@ -1,5 +1,8 @@
 package tads.ts.ifam.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum OrgaoEnum {
 
     ADAF(158), ADS(117), APOSENTADOS_EXECUTIVO(31),
@@ -30,22 +33,29 @@ public enum OrgaoEnum {
     UGPE(121);
 
 
-
     private final int valor;
+    private static final Map<Integer, OrgaoEnum> codigoParaOrgao = new HashMap<>();
 
-    OrgaoEnum(int valorOpcao){
+    static {
+        for (OrgaoEnum orgao : OrgaoEnum.values()) {
+            codigoParaOrgao.put(orgao.getValor(), orgao);
+        }
+    }
+
+    OrgaoEnum(int valorOpcao) {
         valor = valorOpcao;
     }
-    public int getValor(){
+
+    public int getValor() {
         return valor;
     }
 
-    public static String orgaoEnum(int codigo) {
-        for (OrgaoEnum orgao : OrgaoEnum.values()) {
-            if (orgao.getValor() == codigo) {
-                return orgao.name();
-            }
+    public static String fromCodigo(int codigo) {
+        String orgao = String.valueOf(codigoParaOrgao.get(codigo));
+        if (orgao == null) {
+            throw new IllegalArgumentException("Código não correspondente a nenhum órgão: " + codigo);
         }
-        throw new IllegalArgumentException("Código não correspondente a nenhum órgão: " + codigo);
+        return orgao;
     }
+
 }

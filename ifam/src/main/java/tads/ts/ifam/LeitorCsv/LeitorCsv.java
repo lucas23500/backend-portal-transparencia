@@ -60,8 +60,8 @@ public class LeitorCsv {
                             return new Pessoa(
                                     col[0], col[1], col[2], col[3], col[4],
                                     rmnT, col[6], rmnD, col[8], LD,
-                                    OrgaoEnum.orgaoEnum(Integer.parseInt(endereco.replaceAll("^(\\d+)_.*$", "$1"))),
-                                    MesEnum.mesEnum(Integer.parseInt(endereco.replaceAll(".*_(\\d{4})(\\d{2})\\.csv", "$2"))),
+                                    OrgaoEnum.fromCodigo(Integer.parseInt(endereco.replaceAll("^(\\d+)_.*$", "$1"))),
+                                    MesEnum.fromCodigo(Integer.parseInt(endereco.replaceAll(".*_(\\d{4})(\\d{2})\\.csv", "$2"))),
                                     Integer.valueOf(endereco.replaceAll(".*_(\\d{4})\\d{2}\\.csv", "$1"))
                             );
                         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
