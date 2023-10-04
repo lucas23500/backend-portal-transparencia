@@ -9,7 +9,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+
 @Slf4j
 public class LeitorCsv {
 
@@ -40,11 +43,28 @@ public class LeitorCsv {
     public List<Pessoa> lerCsv(String endereco) throws IOException {
         List<CsvPessoa> pessoas = new ArrayList<>();
 
+
         Files.lines(Paths.get(this.endereco + endereco), StandardCharsets.UTF_8)
                 .skip(1)
-                .map(line -> line.split(";"))
-                .map(col-> new CsvPessoa(col[0],col[1],col[2],col[3],col[4],col[5],col[6],col[7],col[8],col[9]))
+                .map(line -> line.split(";", -1)) // Usar -1 para manter campos vazios
+                .map(col -> {
+                    if (col.length >= 10) {
+                        return new CsvPessoa(col[0], col[1], col[2], col[3], col[4], col[5], col[6], col[7], col[8], col[9]);
+                    } else {
+                        // Lide com o caso em que a linha não tem todas as colunas esperadas
+                        // Você pode registrar um erro ou fazer o tratamento adequado aqui
+                        log.error("Erro ao ler linha: " + String.join(";", col));
+                        return null;
+                    }
+                })
+                .filter(Objects::nonNull) // Remova linhas com erro
                 .forEach(pessoas::add);
+
+
+
+
+//                .map(col -> new CsvPessoa(col[0], col[1], col[2], col[3], col[4], col[5], col[6], col[7], col[8], col[9]))
+//                .forEach(pessoas::add);
 
         List<Pessoa> novaPessoas = new ArrayList<>();
         try {
@@ -131,9 +151,14 @@ public class LeitorCsv {
 
         input = input.replaceAll(",", "");
         input = input.replaceAll("\\.", "");
-        String  primeiraParte = input.substring(0, input.length() - 2);
-        String segundaParte = input.substring(input.length() - 2);
-
+        String segundaParte = null;
+        String primeiraParte = null;
+        try {
+            primeiraParte = input.substring(0, input.length() - 2);
+            segundaParte = input.substring(input.length() - 2);
+        }catch (StringIndexOutOfBoundsException e ){
+            System.out.println("Erro no input: " + input);
+        }
         String res = primeiraParte + "." + segundaParte;
         return res;
 
