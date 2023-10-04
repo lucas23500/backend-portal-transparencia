@@ -51,16 +51,17 @@ public class LeitorCsv {
                     if (col.length >= 10) {
                         return new CsvPessoa(col[0], col[1], col[2], col[3], col[4], col[5], col[6], col[7], col[8], col[9]);
                     } else {
+                        // Lide com o caso em que a linha não tem todas as colunas esperadas
+                        // Você pode registrar um erro ou fazer o tratamento adequado aqui
                         log.error("Erro ao ler linha: " + String.join(";", col));
                         return null;
                     }
                 })
-                .filter(Objects::nonNull)
+                .filter(Objects::nonNull) // Remova linhas com erro
                 .forEach(pessoas::add);
 
 
         List<Pessoa> novaPessoas = new ArrayList<>();
-
         try {
             novaPessoas = converteCsvPessoa(
                     pessoas,

@@ -30,6 +30,7 @@ public class CargaInicial {
 
         List<String> lista = new LeitorCsv().listarNomesArquivosCSV();
 
+
         for(String arquivoCSV : lista){
             List<Pessoa> pessoaList = leitorCsv.lerCsv(arquivoCSV);
             pessoaRepository.saveAll(pessoaList);
