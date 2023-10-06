@@ -17,7 +17,7 @@ import java.util.Objects;
 @Slf4j
 public class LeitorCsv {
 
-    private final String endereco = "C:/dev/projetos/tcc-projeto/atividadeGPS/ifam/src/main/resources/dados/";
+    private final String endereco = "C:/dev/projetos/tcc-projeto/backend-portal-transparencia/ifam/src/main/resources/dados/";
 
     public List<String> listarNomesArquivosCSV() {
         List<String> nomesArquivosCSV = new ArrayList<>();
