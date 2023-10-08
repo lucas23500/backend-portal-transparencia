@@ -1,9 +1,6 @@
 package tads.ts.ifam.LeitorCsv;
 
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Session;
-import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.springframework.dao.DataAccessException;
 import tads.ts.ifam.controller.*;
 import tads.ts.ifam.model.*;
@@ -85,7 +82,37 @@ public class LeitorCsv {
         return nomesArquivosCSV;
     }
 
+
+
+    public void incluiDadosBase(String endereco) throws IOException {
+        List<Pessoa> pessoas = new ArrayList<>();
+
+        try {
+            Files.lines(Paths.get(this.endereco + endereco), StandardCharsets.UTF_8)
+                    .skip(1)
+                    .map(line -> line.split(";", -1)) // Usar -1 para manter campos vazios
+                    .filter(col -> col.length >= 10)
+                    .forEach(col -> {
+                        try {
+
+                            salvaCargo(col[2]);
+                            salvaLotacao(col[1]);
+                            salvaFuncao(col[3]);
+                            salvaOrgao(OrgaoEnum.fromCodigo(Integer.parseInt(endereco.replaceAll("^(\\d+)_.*$", "$1"))));
+                            salvaVinculo(col[4]);
+
+                        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                            log.error("Erro ao ler linha: " + String.join(";", col), e);
+                        }
+                    });
+        } catch (IOException e) {
+            log.error("Erro ao ler arquivo CSV: " + endereco, e);
+        }
+    }
+
+
     public List<Pessoa> lerCsv(String endereco) throws IOException {
+
         List<Pessoa> pessoas = new ArrayList<>();
 
         try {
@@ -103,16 +130,16 @@ public class LeitorCsv {
                             double rmnD = Double.parseDouble(remuneracaoDevida);
                             double LD = Double.parseDouble(liquidosDisponiveis);
 
-                            salvaCargo(col[2]);
-                            salvaLotacao(col[1]);
-                            salvaFuncao(col[3]);
-                            salvaOrgao(OrgaoEnum.fromCodigo(Integer.parseInt(endereco.replaceAll("^(\\d+)_.*$", "$1"))));
-                            salvaVinculo(col[4]);
+
 
                             return new Pessoa(
-                                    col[0], col[1], col[2], col[3], col[4],
+                                    col[0],
+                                    lotacaoRepository.findOneByNome(col[1]),
+                                    cargoRepository.findOneByNome(col[2]),
+                                    funcaoRepository.findOneByNome(col[3]),
+                                    vinculoRepository.findOneByNome(col[4]),
                                     rmnT, col[6], rmnD, col[8], LD,
-                                    OrgaoEnum.fromCodigo(Integer.parseInt(endereco.replaceAll("^(\\d+)_.*$", "$1"))),
+                                    orgaoRepository.findOneByNome(OrgaoEnum.fromCodigo(Integer.parseInt(endereco.replaceAll("^(\\d+)_.*$", "$1")))),
                                     MesEnum.fromCodigo(Integer.parseInt(endereco.replaceAll(".*_(\\d{4})(\\d{2})\\.csv", "$2"))),
                                     Integer.valueOf(endereco.replaceAll(".*_(\\d{4})\\d{2}\\.csv", "$1"))
                             );
@@ -126,6 +153,8 @@ public class LeitorCsv {
         } catch (IOException e) {
             log.error("Erro ao ler arquivo CSV: " + endereco, e);
         }
+
+
 
         return pessoas;
     }

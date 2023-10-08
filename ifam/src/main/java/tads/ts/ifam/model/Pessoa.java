@@ -3,15 +3,14 @@ package tads.ts.ifam.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 @Data
 @Entity
 public class Pessoa {
 
-    public Pessoa(String nome, String lotacao, String cargo, String funcao, String vinculo, Double remuneracaoTotal, String descontoTeto, Double remunercaoDevida, String descontosLegais, Double liquidosDisponiveis, String orgaoDoGoverno, String mesPagamento, Integer anoPagamento) {
+
+    public Pessoa(String nome, Lotacao lotacao, Cargo cargo, Funcao funcao, Vinculo vinculo, Double remuneracaoTotal, String descontoTeto, Double remunercaoDevida, String descontosLegais, Double liquidosDisponiveis, Orgao orgaoDoGoverno, String mesPagamento, Integer anoPagamento) {
         this.nome = nome;
         this.lotacao = lotacao;
         this.cargo = cargo;
@@ -36,19 +35,47 @@ public class Pessoa {
 
     private String nome;
 
-    private String lotacao;
-    private String cargo;
-    private String funcao;
-    private String vinculo;
+    @ManyToOne
+    private Lotacao lotacao;
+
+    @ManyToOne
+    private Cargo cargo;
+
+    @ManyToOne
+    private Funcao funcao;
+
+    @ManyToOne
+    private Vinculo vinculo;
     private Double remuneracaoTotal;
     private String descontoTeto;
     private Double remunercaoDevida;
     private String descontosLegais;
     private Double liquidosDisponiveis;
-
-    private String orgaoDoGoverno;
+    @ManyToOne
+    private Orgao orgaoDoGoverno;
 
     private String mesPagamento;
     private Integer anoPagamento;
+
+
+    @Override
+    public String toString() {
+        return "Pessoa{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", lotacao=" + lotacao.getNome() +
+                ", cargo=" + cargo.getNome() +
+                ", funcao=" + funcao.getNome() +
+                ", vinculo=" + vinculo.getNome() +
+                ", remuneracaoTotal=" + remuneracaoTotal +
+                ", descontoTeto='" + descontoTeto + '\'' +
+                ", remunercaoDevida=" + remunercaoDevida +
+                ", descontosLegais='" + descontosLegais + '\'' +
+                ", liquidosDisponiveis=" + liquidosDisponiveis +
+                ", orgaoDoGoverno=" + orgaoDoGoverno.getNome() +
+                ", mesPagamento='" + mesPagamento + '\'' +
+                ", anoPagamento=" + anoPagamento +
+                '}';
+    }
 }
 

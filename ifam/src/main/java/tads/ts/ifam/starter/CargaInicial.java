@@ -1,7 +1,6 @@
 package tads.ts.ifam.starter;
 
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import tads.ts.ifam.LeitorCsv.LeitorCsv;
@@ -62,19 +61,17 @@ public class CargaInicial {
                 vinculoController, vinculoRepository);
     }
 
-
-//    @Autowired
-//    public CargaInicial(PessoaRepository pessoaRepository, LotacaoRepository lotacaoRepository, LotacaoController lotacaoController) {
-//        this.pessoaRepository = pessoaRepository;
-//        this.lotacaoRepository = lotacaoRepository;
-//        this.lotacaoController = lotacaoController;
-//        this.leitorCsv = new LeitorCsv(pessoaRepository,
-//                lotacaoRepository, lotacaoController);
-//
-//    }
-
     public void salvaRepo() throws IOException {
         List<String> lista = leitorCsv.listarNomesArquivosCSV();
+
+        lista.forEach(arquivoCSV -> {
+            try {
+                leitorCsv.incluiDadosBase(arquivoCSV);
+                log.info("Arquivo CSV [ " + arquivoCSV + " ] Salvo com Sucesso na Base");
+            } catch (IOException e) {
+                log.error("Erro ao processar o arquivo CSV [ " + arquivoCSV + " ]: " + e.getMessage(), e);
+            }
+        });
 
         lista.forEach(arquivoCSV -> {
             try {
