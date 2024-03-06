@@ -18,7 +18,7 @@ import java.util.Objects;
 @Slf4j
 public class LeitorCsv {
 
-    private final String endereco = "C:/dev/projetos/tcc-projeto/backend-portal-transparencia/ifam/src/main/resources/dados/";
+    private final String endereco = "C:/dev/tcc/backend-portal-transparencia/ifam/src/main/resources/dados/";
     private final CargoController cargoController;
     private final FuncaoController funcaoController;
     private final LotacaoController lotacaoController;
